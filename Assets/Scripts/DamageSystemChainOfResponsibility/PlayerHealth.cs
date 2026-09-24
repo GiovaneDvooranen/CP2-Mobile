@@ -35,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
 
         damageFlash.Flash();
 
-        PlayHitFeedback();
+
 
         if (health.health <= 0)
         {
@@ -49,34 +49,6 @@ public class PlayerHealth : MonoBehaviour
             );
         }
     }
-
-    private void PlayHitFeedback()
-    {
-        transform.DOKill();
-
-        transform.localScale = originalScale;
-
-        Sequence seq = DOTween.Sequence();
-
-        seq.Append(
-            transform.DOScale(
-                new Vector3(
-                    originalScale.x * 1.15f,
-                    originalScale.y * 0.85f,
-                    originalScale.z * 1.15f
-                ),
-                0.05f
-            )
-        );
-
-        seq.Append(
-            transform.DOScale(
-                originalScale,
-                0.10f
-            )
-        );
-    }
-
     public float GetHealth()
     {
         return health.health;
