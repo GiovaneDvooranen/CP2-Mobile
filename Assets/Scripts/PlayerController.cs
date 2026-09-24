@@ -13,11 +13,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 move = transform.right * h + transform.forward * v;
+        Vector3 move =
+        new Vector3(h, 0, v).normalized;
 
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(
+        move *
+        speed *
+        Time.deltaTime
+        );
     }
 }
