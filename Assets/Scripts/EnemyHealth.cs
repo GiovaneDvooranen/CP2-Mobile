@@ -8,9 +8,14 @@ public class EnemyHealth : MonoBehaviour
 
     public int scoreValue = 10;
 
+    private Renderer rend;
+    private Color originalColor;
+
     private void Start()
     {
+        rend = GetComponent<Renderer>();
         originalScale = transform.localScale;
+        originalColor = rend.material.color;
     }
 
     public void TakeDamage(int damage)
@@ -31,12 +36,24 @@ public class EnemyHealth : MonoBehaviour
     {
         transform.DOKill();
 
-        transform.DOPunchScale(
-        Vector3.one * 0.4f,
-        0.2f,
-        5,
-        0.5f
-        );
+        if (rend != null)
+            rend.material.DOKill();
+
+        transform.DOPunchScale( Vector3.one * 0.4f, 0.2f, 5, 0.5f);
+
+        Sequence seq = DOTween.Sequence();
+
+        seq.Append(rend.material.DOColor(Color.red, 0.05f));
+
+        seq.Append(rend.material.DOColor(originalColor, 0.05f));
+    }
+
+    private void OnDestroy()
+    {
+        transform.DOKill();
+
+        if (rend != null)
+            rend.material.DOKill();
     }
 
 }
